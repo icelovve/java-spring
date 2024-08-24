@@ -1,5 +1,6 @@
 package com.example.student.entity;
 
+import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,16 +26,16 @@ public class StudentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studentId;
-    
-    private String studentCode;
-    private String studentFirstName;
-    private String studentLastName;
+    private Integer studentId;   
+
+    private String studentCode;   
+    private String studentFirstName;  
+    private String studentLastName;  
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")
-    private FacultyEntity facultyEntity;
+    private FacultyEntity faculty;   
 
     @OneToMany(mappedBy = "student")
-    private List<EnrollEntity> enrollments;
+    private List<EnrollEntity> enrollments;  
 }

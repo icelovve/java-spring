@@ -24,6 +24,7 @@ public class FacultyService {
             return faculty.get();
         }
         return null;
+        
     }
 
     public FacultyEntity saveFaculty(FacultyEntity facultyEntity){

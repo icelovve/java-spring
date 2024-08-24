@@ -26,6 +26,12 @@ public class EnrollService {
         return null;
     }
 
+    public EnrollEntity saveEnroll(EnrollEntity enrollEntity) {
+        EnrollEntity enroll = enrollRepository.save(enrollEntity);
+        return enroll; 
+    }
+
+
     public void deleteEnrollEntityById(Integer entityById) {
         enrollRepository.deleteById(entityById);
     }

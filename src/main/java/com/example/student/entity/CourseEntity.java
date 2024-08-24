@@ -1,7 +1,6 @@
 package com.example.student.entity;
 
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,8 +24,8 @@ public class CourseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer courseId;
-    
     private String courseName;
     private String courseDescription;
 

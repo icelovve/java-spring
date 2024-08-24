@@ -1,0 +1,6 @@
+2024-08-25 05:32:49.450103+07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM STUDENT STUDENT_ID [*]STUDENT_FIRST_NAME"; SQL statement:
+SELECT * FROM STUDENT STUDENT_ID STUDENT_FIRST_NAME [42000-224]
+2024-08-25 06:03:08.636317+07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM STUDENT COURSE [*]FACULTY"; SQL statement:
+SELECT * FROM STUDENT COURSE FACULTY [42000-224]

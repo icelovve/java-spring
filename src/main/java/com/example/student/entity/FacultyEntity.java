@@ -1,7 +1,6 @@
 package com.example.student.entity;
 
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +27,6 @@ public class FacultyEntity {
     private Integer facultyId;
     private String facultyName;
 
-    @OneToMany(mappedBy = "facultyEntity")
+    @OneToMany(mappedBy = "faculty")
     private List<StudentEntity> students;
 }
