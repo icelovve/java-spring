@@ -24,7 +24,7 @@ public class FacultyController {
         List<FacultyEntity> facultyList = facultyService.getFacultyEntities();
         System.out.println("--------- GetAll() Result ---------");
         System.out.println("Size: " + facultyList.size());
-        return "index";
+        return "faculty/index";
     }
 
     @GetMapping("/{faculty-id}")
@@ -37,7 +37,7 @@ public class FacultyController {
         FacultyEntity entity = facultyService.getFacultyEntityById(facultyId);
         System.out.println("--------- getById() Result ---------");
         System.out.println("Faculty Name: " + entity.getFacultyName());
-        return "index";
+        return "faculty/index";
     }
     
     @GetMapping("/delete/{faculty-id}")
@@ -50,7 +50,7 @@ public class FacultyController {
         System.out.println("--------- getDeleteById() Result ---------");
         facultyService.deleteFacultyEntityById(facultyId);
 
-        return "index";
+        return "faculty/index";
     }
 
     @PostMapping("/")
@@ -71,6 +71,6 @@ public class FacultyController {
         System.out.println("Faculty ID: " + result.getFacultyId());
         System.out.println("Faculty Name: " + result.getFacultyName());
 
-        return "index";
+        return "faculty/index";
     }
 }

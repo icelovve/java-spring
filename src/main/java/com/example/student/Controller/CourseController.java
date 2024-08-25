@@ -28,7 +28,7 @@ public class CourseController {
         List<CourseEntity> courses = courseService.getCourseAll();
         System.out.println("------ CourseController getAll Result ------");
         System.out.println("Size: " + courses.size());
-        return "index";
+        return "course/index";
     }
 
     @GetMapping("/{course-id}")
@@ -39,7 +39,7 @@ public class CourseController {
         CourseEntity entity = courseService.getCourseById(courseId);
         System.out.println("--------- GetById() Result ---------");
         System.out.println("Course Name: " + entity.getCourseName());
-        return "index";
+        return "course/index";
     }
 
     @GetMapping("/delete/{course-id}")
@@ -48,7 +48,7 @@ public class CourseController {
         System.out.println("Course ID: " + courseId);
 
         courseService.deleteCourseById(courseId);
-        return "index";
+        return "course/index";
     }
 
     @PostMapping("/")
@@ -59,7 +59,7 @@ public class CourseController {
 
         System.out.println("--------- postInsertAndUpdate() Result ---------");
         CourseEntity entity = new CourseEntity();
-        if (param.get("course_id") != null && !param.get("course_id").isEmpty()) {
+        if (null != param.get("course-id")) {
             entity.setCourseId(Integer.parseInt(param.get("course-id")));
         }
         entity.setCourseName(param.get("course-name"));
@@ -67,6 +67,6 @@ public class CourseController {
         CourseEntity result = courseService.saveCourse(entity);
         System.out.println("Course ID: " + result.getCourseId());
         System.out.println("Course Name: " + result.getCourseName());
-        return "index";
+        return "course/index";
     }
 }

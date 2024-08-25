@@ -33,7 +33,7 @@ public class EnrollController {
         List<EnrollEntity> enrollList = enrollService.getEnrollEntities();
         System.out.println("--------- GetAll() Result ---------");
         System.out.println("Size: " + enrollList.size());
-        return "index";
+        return "enroll/index";
     }
 
     @GetMapping("/{enrollId}")
@@ -49,7 +49,7 @@ public class EnrollController {
 
         System.out.println("--------- GetById() Result ---------");
         System.out.println("Enroll Details: " + entity);  
-        return "index";
+        return "enroll/index";
     }
 
     @GetMapping("/delete/{enrollId}")
@@ -59,45 +59,29 @@ public class EnrollController {
 
         enrollService.deleteEnrollEntityById(enrollId);
         System.out.println("--------- GetDeleteById() Result ---------");
-        return "index";
+        return "enroll/index";
     }
 
     @PostMapping("/")
     public String postInsertAndUpdate(@RequestParam Map<String, String> param) {
         System.out.println("--------- PostInsertAndUpdate() ---------");
-        String enrollIdStr = param.get("enroll-id");
-        String courseIdStr = param.get("course-id");
-        String studentIdStr = param.get("student-id");
+        System.out.println("enroll-id: " + param.get("enrollId-id"));
+        System.out.println("course-id: " + param.get("course-id"));
+        System.out.println("student-id: " + param.get("student-id"));
 
-        Integer courseId = null;
-        Integer studentId = null;
-
-        if (courseIdStr != null) {
-            courseId = Integer.parseInt(courseIdStr);
-        }
-        if (studentIdStr != null) {
-            studentId = Integer.parseInt(studentIdStr);
-        }
-
+        System.out.println("--------- PostInsertAndUpdate() Reuslt ---------");
+        Integer courseId = Integer.parseInt(param.get("course-id"));
         CourseEntity courseEntity = courseService.getCourseById(courseId);
-        if (courseEntity == null) {
-            System.out.println("Course not found");
-            return "index";
-        }
-        System.out.println("Course Name: " + courseEntity.getCourseName());
+        System.out.println("CourseId: " + courseEntity.getCourseId());
 
+        Integer studentId = Integer.parseInt(param.get("student-id"));
         StudentEntity studentEntity = studentService.getStudentById(studentId);
-        if (studentEntity == null) {
-            System.out.println("Student not found");
-            return "index";
-        }
-        System.out.println("Student Name: " + studentEntity.getStudentCode());
+        System.out.println("studentId: " + studentEntity.getStudentId());
 
         EnrollEntity entity = new EnrollEntity();
-        if (enrollIdStr != null) {
-            entity.setEnrollId(Integer.parseInt(enrollIdStr));
+        if (null != param.get("enroll-id")) {
+            entity.setEnrollId(Integer.parseInt(param.get("enroll-id")));
         }
-
         entity.setCourse(courseEntity);
         entity.setStudent(studentEntity);
         EnrollEntity result = enrollService.saveEnroll(entity);
@@ -105,6 +89,6 @@ public class EnrollController {
         System.out.println("Course Name: " + result.getCourse().getCourseName());
         System.out.println("Student Code: " + result.getStudent().getStudentCode());
 
-        return "index";
+        return "enroll/index";
     }
 }

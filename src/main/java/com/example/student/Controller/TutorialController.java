@@ -17,7 +17,7 @@ public class TutorialController {
     ) {
         System.out.println("----getTutorial----");
         System.out.println("ID: " + id);
-        return "index";
+        return "templates";
     }
 
     @GetMapping("/{id}")
