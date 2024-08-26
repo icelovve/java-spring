@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/tutorial")
 public class TutorialController {
-    
+
     @GetMapping("/")
     public String getTutorial(
-        @RequestParam(name = "id", required = false, defaultValue = "0") Integer id
-    ) {
+            @RequestParam(name = "id", required = false, defaultValue = "0") Integer id) {
         System.out.println("----getTutorial----");
         System.out.println("ID: " + id);
         return "templates";
@@ -22,8 +21,7 @@ public class TutorialController {
 
     @GetMapping("/{id}")
     public String getTutorialPath(
-        @PathVariable("id") Integer id
-    ) {
+            @PathVariable("id") Integer id) {
         System.out.println("----getTutorialPath----");
         System.out.println("ID: " + id);
         return "index";
@@ -31,9 +29,8 @@ public class TutorialController {
 
     @PostMapping("/")
     public String postMethodName(
-        @RequestParam(name = "id", required = false, defaultValue = "0") Integer id,
-        @RequestParam(name = "code", required = false, defaultValue = "") String code
-    ) {
+            @RequestParam(name = "id", required = false, defaultValue = "0") Integer id,
+            @RequestParam(name = "code", required = false, defaultValue = "") String code) {
         System.out.println("----postMethodName----");
         System.out.println("ID: " + id);
         System.out.println("Code: " + code);

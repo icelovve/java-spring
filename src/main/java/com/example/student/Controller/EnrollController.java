@@ -9,10 +9,16 @@ import com.example.student.service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/enroll")
@@ -28,29 +34,36 @@ public class EnrollController {
     private StudentService studentService;
 
     @GetMapping({"", "/"})
-    public String getAll() {
+    public String getAll(ModelMap model) {
         System.out.println("--------- GetAll() ---------");
-        List<EnrollEntity> enrollList = enrollService.getEnrollEntities();
-        System.out.println("--------- GetAll() Result ---------");
-        System.out.println("Size: " + enrollList.size());
+        //List<EnrollEntity> enrollList = enrollService.getEnrollEntities();
+        //System.out.println("--------- GetAll() Result ---------");
+        //System.out.println("Size: " + enrollList.size());
+
+        List <CourseEntity> courses = courseService.getCourseAll();
+        model.addAttribute("courses", courses);
         return "enroll/index";
     }
+    @GetMapping("/{student-id}")
+    public String getById(
+            @PathVariable(name = "student=id") Integer studentId,
+            ModelMap model) {
+    
+        StudentEntity student = studentService.getStudentById(studentId);
+        model.addAttribute("student", student);
+        
+        List<EnrollEntity> enrolls = enrollService.getEnrollEntities();
+         
+        List<EnrollEntity> resultList = enrolls.stream()
+        .filter(enroll -> enroll.getStudent().getStudentId() == studentId)
+        .collect(Collectors.toList());
+        model.addAttribute("enrolls", resultList);
 
-    @GetMapping("/{enrollId}")
-    public String getById(@PathVariable(name = "enrollId") Integer enrollId) {
-        System.out.println("--------- GetById() ---------");
-        System.out.println("Enroll ID: " + enrollId);
-
-        EnrollEntity entity = enrollService.getEnrollEntityById(enrollId);
-        if (entity == null) {
-            System.out.println("Enroll not found");
-            return "error"; // ใช้หน้า error แทน
-        }
-
-        System.out.println("--------- GetById() Result ---------");
-        System.out.println("Enroll Details: " + entity);  
+        List<CourseEntity> courses = courseService.getCourseAll();
+        model.addAttribute("courese",courses);
         return "enroll/index";
     }
+    
 
     @GetMapping("/delete/{enrollId}")
     public String getDeleteById(@PathVariable(name = "enrollId") Integer enrollId) {

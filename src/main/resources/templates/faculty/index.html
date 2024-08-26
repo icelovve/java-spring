@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <th:block th:replace="~{templates::head}"></th:block>
-</head>
+  </head>
 
-<body>
+  <body>
     <th:block th:replace="~{templates::menu('faculty')}"></th:block>
     <th:block th:replace="~{templates::content-begin}"></th:block>
-    <!-- Faculty  -->
-    Faculty
-    <th:block th:replace="~{templates::content-end}"></th:block>
-</body>
 
+    <form th:action="@{/faculty}" method="post">
+      <div class="my-2">
+        <label class="w-32 inline-block">Faculty Id:</label>
+        <input
+          type="text"
+          name="faculty-id"
+          class="border border-blue-600 p-1 rounded w-80"
+          th:value="${faculty?.facultyId?:'0'}"
+          readonly
+        />
+      </div>
+      <div class="my-2">
+        <label class="w-32 inline-block">Faculty Name:</label>
+        <input
+          type="text"
+          name="faculty-name"
+          class="border border-blue-600 p-1 rounded w-80"
+          th:value="${faculty?.facultyName?:''}"
+        />
+      </div>
+      <div class="my-2 text-right">
+        <button class="text-white font-bold bg-blue-600 px-4 rounded">
+          Save Faculty
+        </button>
+      </div>
+    </form>
+    <th:block th:replace="~{templates::content-end}"></th:block>
+
+    <table class="w-full">
+      <thead>
+        <tr class="text-center">
+          <th class="w-[10%]">#</th>
+          <th class="w-[10%]">Faculty ID</th>
+          <th class="w-[60%]">Faculty Name</th>
+          <th class="w-[20%]">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="faculty, iterStat : ${faculties}">
+          <td th:text="${iterStat.count}" class="text-center"></td>
+          <td th:text="${faculty.facultyId}" class="text-center"></td>
+          <td th:text="${faculty.facultyName}"></td>
+          <td class="text-center">
+            <a th:href="@{/faculty/{id}(id=${faculty.facultyId})}">Edit</a>
+            <a
+              th:href="@{/faculty/delete/{id}(id=${faculty.facultyId})}"
+              class="text-red-600"
+              >Delete</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
 </html>

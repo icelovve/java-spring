@@ -2,6 +2,7 @@ package com.example.student.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,43 +22,61 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping({"", "/"})
-    public String getAll() {
+    @GetMapping({ "", "/" })
+    public String getAll(ModelMap model) {
         System.out.println("------ CourseController getAll ------");
 
+        // List<CourseEntity> courses = courseService.getCourseAll();
+        // System.out.println("------ CourseController getAll Result ------");
+        // System.out.println("Size: " + courses.size());
+
         List<CourseEntity> courses = courseService.getCourseAll();
-        System.out.println("------ CourseController getAll Result ------");
-        System.out.println("Size: " + courses.size());
+        model.addAttribute("courses", courses);
         return "course/index";
     }
 
     @GetMapping("/{course-id}")
-    public String getById(@PathVariable("course-id") Integer courseId) {
-        System.out.println("--------- GetById() ---------");
-        System.out.println("course-id: " + courseId);
+    public String getById(
+            @PathVariable("course-id") Integer courseId,
+            ModelMap model) {
+        // System.out.println("--------- GetById() ---------");
+        // System.out.println("course-id: " + courseId);
 
         CourseEntity entity = courseService.getCourseById(courseId);
-        System.out.println("--------- GetById() Result ---------");
-        System.out.println("Course Name: " + entity.getCourseName());
+        model.addAttribute("course", entity);
+        // System.out.println("--------- GetById() Result ---------");
+        // System.out.println("Course Name: " + entity.getCourseName());
+
+        List<CourseEntity> courses = courseService.getCourseAll();
+        model.addAttribute("courses", courses);
+
         return "course/index";
     }
 
     @GetMapping("/delete/{course-id}")
-    public String getDeleteById(@PathVariable("course-id") Integer courseId) {
-        System.out.println("---- CourseController getDelete() ----");
-        System.out.println("Course ID: " + courseId);
+    public String getDeleteById(
+            @PathVariable("course-id") Integer courseId, 
+            ModelMap model) {
+        //System.out.println("---- CourseController getDelete() ----");
+        //System.out.println("Course ID: " + courseId);
 
         courseService.deleteCourseById(courseId);
+
+        List<CourseEntity> courses = courseService.getCourseAll();
+        model.addAttribute("courses", courses);
+
         return "course/index";
     }
 
     @PostMapping("/")
-    public String postInsertAndUpdate(@RequestParam Map<String, String> param) {
-        System.out.println("--------- postInsertAndUpdate() ---------");
-        System.out.println("course-id: " + param.get("course-id"));
-        System.out.println("course-name: " + param.get("course-name"));
+    public String postInsertAndUpdate(
+            @RequestParam Map<String, String> param,
+            ModelMap model) {
+        //System.out.println("--------- postInsertAndUpdate() ---------");
+        //System.out.println("course-id: " + param.get("course-id"));
+        //System.out.println("course-name: " + param.get("course-name"));
+        //System.out.println("--------- postInsertAndUpdate() Result ---------");
 
-        System.out.println("--------- postInsertAndUpdate() Result ---------");
         CourseEntity entity = new CourseEntity();
         if (null != param.get("course-id")) {
             entity.setCourseId(Integer.parseInt(param.get("course-id")));
@@ -65,8 +84,11 @@ public class CourseController {
         entity.setCourseName(param.get("course-name"));
         entity.setCourseDescription(param.get("course-description"));
         CourseEntity result = courseService.saveCourse(entity);
-        System.out.println("Course ID: " + result.getCourseId());
-        System.out.println("Course Name: " + result.getCourseName());
+        //System.out.println("Course ID: " + result.getCourseId());
+        //System.out.println("Course Name: " + result.getCourseName());
+        List<CourseEntity> courses = courseService.getCourseAll();
+        model.addAttribute("courses", courses);
+
         return "course/index";
     }
 }
